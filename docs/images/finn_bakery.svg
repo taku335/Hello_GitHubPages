@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" fill="#fffaf0"/>
+  <!-- Ears -->
+  <circle cx="170" cy="140" r="50" fill="#b5651d" stroke="#000" stroke-width="4"/>
+  <circle cx="342" cy="140" r="50" fill="#b5651d" stroke="#000" stroke-width="4"/>
+  <!-- Head -->
+  <circle cx="256" cy="240" r="120" fill="#b5651d" stroke="#000" stroke-width="4"/>
+  <!-- Muzzle -->
+  <ellipse cx="256" cy="290" rx="70" ry="50" fill="#f5deb3" stroke="#000" stroke-width="3"/>
+  <!-- Eyes -->
+  <circle cx="216" cy="230" r="15" fill="#000"/>
+  <circle cx="296" cy="230" r="15" fill="#000"/>
+  <!-- Nose -->
+  <polygon points="256,260 240,285 272,285" fill="#000"/>
+  <!-- Mouth -->
+  <path d="M236 295 Q256 315 276 295" stroke="#000" stroke-width="4" fill="none"/>
+  <!-- Bread -->
+  <path d="M176 360 h160 v90 h-160 z" fill="#d2b48c" stroke="#000" stroke-width="4"/>
+  <path d="M176 360 q20 -40 40 0 t40 0 t40 0 t40 0 v90 h-160 z" fill="#deb887" stroke="#000" stroke-width="4"/>
+  <line x1="206" y1="360" x2="206" y2="450" stroke="#000" stroke-width="3"/>
+  <line x1="246" y1="360" x2="246" y2="450" stroke="#000" stroke-width="3"/>
+  <line x1="286" y1="360" x2="286" y2="450" stroke="#000" stroke-width="3"/>
+  <line x1="326" y1="360" x2="326" y2="450" stroke="#000" stroke-width="3"/>
+</svg>
