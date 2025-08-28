@@ -17,9 +17,11 @@
   nav a { color:#5a3e2b; text-decoration:none; border:1px solid #5a3e2b; padding:5px 10px; border-radius:5px; background:#fff; }
   nav a + a { margin-left:10px; }
   main { padding:40px 10px; }
+  .products { display:flex; justify-content:center; gap:40px; }
+  .product { flex:1; max-width:300px; }
   label { display:block; margin:10px 0; }
   input[type="number"] { padding:5px; border:1px solid #ccc; border-radius:4px; }
-  #result { margin-top:20px; font-size:1.5rem; }
+  .result { margin-top:20px; font-size:1.5rem; }
 </style>
 </head>
 <body>
@@ -28,25 +30,40 @@
   <nav><a href="index.html">トップに戻る</a></nav>
 </header>
 <main>
-  <label>金額（円）:<input type="number" id="price"></label>
-  <label>重さ（g）:<input type="number" id="weight"></label>
-  <div id="result"></div>
+  <div class="products">
+    <section class="product">
+      <h2>商品1</h2>
+      <label>金額（円）:<input type="number" id="price1"></label>
+      <label>重さ（g）:<input type="number" id="weight1"></label>
+      <div class="result" id="result1"></div>
+    </section>
+    <section class="product">
+      <h2>商品2</h2>
+      <label>金額（円）:<input type="number" id="price2"></label>
+      <label>重さ（g）:<input type="number" id="weight2"></label>
+      <div class="result" id="result2"></div>
+    </section>
+  </div>
 </main>
 <script>
-const priceInput = document.getElementById('price');
-const weightInput = document.getElementById('weight');
-const result = document.getElementById('result');
-function calculate() {
-  const price = parseFloat(priceInput.value);
-  const weight = parseFloat(weightInput.value);
-  if (!isNaN(price) && !isNaN(weight) && weight !== 0) {
-    result.textContent = (price / weight).toFixed(2) + ' 円/g';
-  } else {
-    result.textContent = '';
+function setUpCalculator(priceId, weightId, resultId) {
+  const priceInput = document.getElementById(priceId);
+  const weightInput = document.getElementById(weightId);
+  const result = document.getElementById(resultId);
+  function calculate() {
+    const price = parseFloat(priceInput.value);
+    const weight = parseFloat(weightInput.value);
+    if (!isNaN(price) && !isNaN(weight) && weight !== 0) {
+      result.textContent = (price / weight).toFixed(2) + ' 円/g';
+    } else {
+      result.textContent = '';
+    }
   }
+  priceInput.addEventListener('input', calculate);
+  weightInput.addEventListener('input', calculate);
 }
-priceInput.addEventListener('input', calculate);
-weightInput.addEventListener('input', calculate);
+setUpCalculator('price1', 'weight1', 'result1');
+setUpCalculator('price2', 'weight2', 'result2');
 </script>
 </body>
 </html>
