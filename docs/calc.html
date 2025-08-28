@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>単価計算</title>
+<style>
+  body {
+    font-family: 'Hiragino Sans','Yu Gothic',sans-serif;
+    margin:0;
+    text-align:center;
+    background:linear-gradient(135deg,#fffaf0 0%,#ffe4e1 100%);
+    color:#5a3e2b;
+  }
+  header { background:#ffe4e1; padding:20px 10px; box-shadow:0 3px 6px rgba(0,0,0,0.1); }
+  h1 { margin:0; font-size:2.5rem; }
+  nav { margin-top:10px; }
+  nav a { color:#5a3e2b; text-decoration:none; border:1px solid #5a3e2b; padding:5px 10px; border-radius:5px; background:#fff; }
+  nav a + a { margin-left:10px; }
+  main { padding:40px 10px; }
+  label { display:block; margin:10px 0; }
+  input[type="number"] { padding:5px; border:1px solid #ccc; border-radius:4px; }
+  #result { margin-top:20px; font-size:1.5rem; }
+</style>
+</head>
+<body>
+<header>
+  <h1>単価計算</h1>
+  <nav><a href="index.html">トップに戻る</a></nav>
+</header>
+<main>
+  <label>金額（円）:<input type="number" id="price"></label>
+  <label>重さ（g）:<input type="number" id="weight"></label>
+  <div id="result"></div>
+</main>
+<script>
+const priceInput = document.getElementById('price');
+const weightInput = document.getElementById('weight');
+const result = document.getElementById('result');
+function calculate() {
+  const price = parseFloat(priceInput.value);
+  const weight = parseFloat(weightInput.value);
+  if (!isNaN(price) && !isNaN(weight) && weight !== 0) {
+    result.textContent = (price / weight).toFixed(2) + ' 円/g';
+  } else {
+    result.textContent = '';
+  }
+}
+priceInput.addEventListener('input', calculate);
+weightInput.addEventListener('input', calculate);
+</script>
+</body>
+</html>
