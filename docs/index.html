@@ -2,6 +2,7 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>フィンちゃんのパン屋さん</title>
 <style>
   body {
@@ -17,14 +18,26 @@
   nav a { color:#5a3e2b; text-decoration:none; border:1px solid #5a3e2b; padding:5px 10px; border-radius:5px; background:#fff; }
   nav a + a { margin-left:10px; }
   .hero { padding:40px 10px; }
-  .hero img { animation:float 3s ease-in-out infinite; }
+  .hero img { animation:float 3s ease-in-out infinite; max-width:100%; height:auto; }
   @keyframes float { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-10px);} }
   #friend { padding:20px; }
   #menu { background:#fff; padding:40px 10px; }
   .products { display:flex; justify-content:center; gap:20px; flex-wrap:wrap; margin-top:20px; }
-  .product { width:250px; background:#ffe4e1; padding:20px; border-radius:20px; box-shadow:0 2px 4px rgba(0,0,0,0.1); }
-  .product img { width:200px; height:200px; }
+  .product {
+    flex:1 1 250px;
+    max-width:250px;
+    background:#ffe4e1;
+    padding:20px;
+    border-radius:20px;
+    box-shadow:0 2px 4px rgba(0,0,0,0.1);
+  }
+  .product img { width:100%; height:auto; }
   footer { margin-top:40px; padding:20px 10px; font-size:0.8rem; color:#a58d74; }
+  @media (max-width:600px) {
+    h1 { font-size:2rem; }
+    nav a { display:block; margin:5px 0; }
+    nav a + a { margin-left:0; }
+  }
 </style>
 </head>
 <body>

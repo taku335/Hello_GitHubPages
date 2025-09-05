@@ -2,6 +2,7 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>単価計算</title>
 <style>
   body {
@@ -17,11 +18,17 @@
   nav a { color:#5a3e2b; text-decoration:none; border:1px solid #5a3e2b; padding:5px 10px; border-radius:5px; background:#fff; }
   nav a + a { margin-left:10px; }
   main { padding:40px 10px; }
-  .products { display:flex; justify-content:center; gap:40px; }
-  .product { flex:1; max-width:300px; }
+  .products { display:flex; justify-content:center; gap:40px; flex-wrap:wrap; }
+  .product {
+    flex:1 1 300px;
+    max-width:300px;
+  }
   label { display:block; margin:10px 0; }
   input[type="number"] { padding:5px; border:1px solid #ccc; border-radius:4px; }
   .result { margin-top:20px; font-size:1.5rem; }
+  @media (max-width:600px) {
+    h1 { font-size:2rem; }
+  }
 </style>
 </head>
 <body>
