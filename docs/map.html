@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ルート検索</title>
+<style>
+  body {
+    font-family: 'Hiragino Sans','Yu Gothic',sans-serif;
+    margin:0;
+    text-align:center;
+    background:linear-gradient(135deg,#fffaf0 0%,#ffe4e1 100%);
+    color:#5a3e2b;
+  }
+  header { background:#ffe4e1; padding:20px 10px; box-shadow:0 3px 6px rgba(0,0,0,0.1); }
+  h1 { margin:0; font-size:2.5rem; }
+  nav { margin-top:10px; }
+  nav a { color:#5a3e2b; text-decoration:none; border:1px solid #5a3e2b; padding:5px 10px; border-radius:5px; background:#fff; }
+  nav a + a { margin-left:10px; }
+  main { padding:20px; }
+  form { margin-bottom:20px; }
+  input { padding:5px; margin:5px; }
+  #map { width:100%; height:400px; }
+  @media (max-width:600px) {
+    h1 { font-size:2rem; }
+    nav a { display:block; margin:5px 0; }
+    nav a + a { margin-left:0; }
+  }
+</style>
+</head>
+<body>
+<header>
+  <h1>ルート検索</h1>
+  <nav><a href="index.html">トップに戻る</a></nav>
+</header>
+<main>
+  <form id="route-form">
+    <input type="text" id="start" placeholder="出発地" required>
+    <input type="text" id="end" placeholder="目的地" required>
+    <button type="submit">検索</button>
+  </form>
+  <div id="map"></div>
+</main>
+<script>
+function initMap() {
+  const map = new google.maps.Map(document.getElementById('map'), {
+    center: {lat: 35.681236, lng: 139.767125},
+    zoom: 13
+  });
+  const directionsService = new google.maps.DirectionsService();
+  const directionsRenderer = new google.maps.DirectionsRenderer();
+  directionsRenderer.setMap(map);
+  document.getElementById('route-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const origin = document.getElementById('start').value;
+    const destination = document.getElementById('end').value;
+    if (origin && destination) {
+      directionsService.route({
+        origin: origin,
+        destination: destination,
+        travelMode: google.maps.TravelMode.DRIVING
+      }, function(result, status) {
+        if (status === 'OK') {
+          directionsRenderer.setDirections(result);
+        } else {
+          alert('ルートを取得できません: ' + status);
+        }
+      });
+    }
+  });
+}
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap" async defer></script>
+</body>
+</html>
+
