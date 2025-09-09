@@ -20,7 +20,7 @@
   main { padding:20px; }
   form { margin-bottom:20px; }
   input { padding:5px; margin:5px; }
-  #map { width:100%; height:400px; }
+  #map { width:100%; height:400px; border:0; }
   @media (max-width:600px) {
     h1 { font-size:2rem; }
     nav a { display:block; margin:5px 0; }
@@ -39,38 +39,17 @@
     <input type="text" id="end" placeholder="目的地" required>
     <button type="submit">検索</button>
   </form>
-  <div id="map"></div>
+  <iframe id="map" src="https://maps.google.com/maps?q=%E6%9D%B1%E4%BA%AC%E9%A7%85&output=embed"></iframe>
 </main>
 <script>
-function initMap() {
-  const map = new google.maps.Map(document.getElementById('map'), {
-    center: {lat: 35.681236, lng: 139.767125},
-    zoom: 13
-  });
-  const directionsService = new google.maps.DirectionsService();
-  const directionsRenderer = new google.maps.DirectionsRenderer();
-  directionsRenderer.setMap(map);
-  document.getElementById('route-form').addEventListener('submit', function(e) {
-    e.preventDefault();
-    const origin = document.getElementById('start').value;
-    const destination = document.getElementById('end').value;
-    if (origin && destination) {
-      directionsService.route({
-        origin: origin,
-        destination: destination,
-        travelMode: google.maps.TravelMode.DRIVING
-      }, function(result, status) {
-        if (status === 'OK') {
-          directionsRenderer.setDirections(result);
-        } else {
-          alert('ルートを取得できません: ' + status);
-        }
-      });
-    }
-  });
-}
+document.getElementById('route-form').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const origin = encodeURIComponent(document.getElementById('start').value);
+  const destination = encodeURIComponent(document.getElementById('end').value);
+  const src = `https://maps.google.com/maps?saddr=${origin}&daddr=${destination}&output=embed`;
+  document.getElementById('map').src = src;
+});
 </script>
-<script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap" async defer></script>
 </body>
 </html>
 
