@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>入力フォームとJSON変換</title>
+  <link rel="stylesheet" href="styles/form.css">
+</head>
+<body>
+  <main class="container">
+    <h1>入力フォーム</h1>
+    <p>各項目に値を入力して「JSONに変換」ボタンを押してください。</p>
+    <form id="convert-form" novalidate>
+      <div class="field">
+        <label for="name">名前（日本語）</label>
+        <input id="name" name="name" type="text" autocomplete="name" required>
+        <p class="error" data-error-for="name" aria-live="polite"></p>
+      </div>
+      <div class="field">
+        <label for="num">番号（整数）</label>
+        <input id="num" name="num" type="text" inputmode="numeric" pattern="[0-9]+" required>
+        <p class="error" data-error-for="num" aria-live="polite"></p>
+      </div>
+      <div class="field">
+        <label for="date">日付（YYYY-MM-DD）</label>
+        <input id="date" name="date" type="text" placeholder="2024-01-01" required>
+        <p class="error" data-error-for="date" aria-live="polite"></p>
+      </div>
+      <button id="convert" type="submit">JSONに変換</button>
+    </form>
+    <section aria-live="polite" class="result" id="result"></section>
+  </main>
+  <script type="module" src="scripts/form.js"></script>
+</body>
+</html>
