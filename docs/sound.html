@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>サウンドパレット | フィンちゃんのパン屋さん</title>
+  <style>
+    :root {
+      color-scheme: light;
+    }
+    body {
+      font-family: 'Hiragino Sans','Yu Gothic',sans-serif;
+      margin:0;
+      min-height:100vh;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      background:linear-gradient(135deg,#e0f7fa 0%,#fce4ec 100%);
+      color:#37474f;
+      padding:40px 20px;
+    }
+    h1 {
+      margin-bottom:10px;
+      font-size:2.4rem;
+    }
+    p {
+      max-width:480px;
+      margin:0 auto 30px;
+      line-height:1.6;
+    }
+    .sound-grid {
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(120px,1fr));
+      gap:20px;
+      width:100%;
+      max-width:520px;
+    }
+    button.sound-pad {
+      border:none;
+      padding:18px 10px;
+      border-radius:18px;
+      font-size:1rem;
+      font-weight:bold;
+      letter-spacing:0.05em;
+      cursor:pointer;
+      color:#fff;
+      box-shadow:0 10px 20px rgba(0,0,0,0.15);
+      transition:transform 0.1s ease, box-shadow 0.1s ease;
+      background:linear-gradient(135deg,var(--start),var(--end));
+    }
+    button.sound-pad:focus-visible {
+      outline:3px solid rgba(255,255,255,0.8);
+      outline-offset:2px;
+    }
+    button.sound-pad:active {
+      transform:translateY(2px);
+      box-shadow:0 6px 12px rgba(0,0,0,0.2);
+    }
+    footer {
+      margin-top:40px;
+      font-size:0.85rem;
+      color:#546e7a;
+    }
+    .back-link {
+      display:inline-block;
+      margin-top:25px;
+      color:#37474f;
+      text-decoration:none;
+      font-weight:600;
+      border-bottom:2px solid rgba(55,71,79,0.3);
+      padding-bottom:2px;
+    }
+    .back-link:hover {
+      border-color:rgba(55,71,79,0.6);
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>サウンドパレット</h1>
+    <p>9つのボタンをタップして、フィンちゃんのパン屋さんにぴったりなサウンドを鳴らしてみましょう！それぞれのボタンには異なる効果音を用意しました。</p>
+    <div class="sound-grid">
+      <button class="sound-pad" style="--start:#ff9a9e;--end:#fad0c4;" data-sound="bell">きらめきベル</button>
+      <button class="sound-pad" style="--start:#a18cd1;--end:#fbc2eb;" data-sound="pluck">ふんわりハープ</button>
+      <button class="sound-pad" style="--start:#84fab0;--end:#8fd3f4;" data-sound="laser">きゅいーんレーザー</button>
+      <button class="sound-pad" style="--start:#ffecd2;--end:#fcb69f;" data-sound="drum">ココアドラム</button>
+      <button class="sound-pad" style="--start:#f6d365;--end:#fda085;" data-sound="sparkle">はじけるスパーク</button>
+      <button class="sound-pad" style="--start:#cfd9df;--end:#e2ebf0;" data-sound="robot">ロボットトーク</button>
+      <button class="sound-pad" style="--start:#ffafbd;--end:#ffc3a0;" data-sound="chord">甘いハーモニー</button>
+      <button class="sound-pad" style="--start:#a1c4fd;--end:#c2e9fb;" data-sound="whoosh">そよかぜウーシュ</button>
+      <button class="sound-pad" style="--start:#d4fc79;--end:#96e6a1;" data-sound="clock">ことことタイマー</button>
+    </div>
+    <a class="back-link" href="index.html">← トップページへ戻る</a>
+  </main>
+  <footer>© 2024 フィンちゃんのパン屋さん</footer>
+  <script>
+    const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+    const audioCtx = new AudioContextClass();
+
+    const playTone = ({
+      type = 'sine',
+      frequency = 440,
+      duration = 0.5,
+      attack = 0.02,
+      release = 0.2,
+      gain = 0.5,
+      detune = 0,
+      startOffset = 0
+    }) => {
+      const osc = audioCtx.createOscillator();
+      const amp = audioCtx.createGain();
+      const start = audioCtx.currentTime + startOffset;
+      const end = start + duration;
+      const sustainEnd = end - release;
+
+      osc.type = type;
+      osc.frequency.setValueAtTime(frequency, start);
+      if (detune) {
+        osc.detune.setValueAtTime(detune, start);
+      }
+
+      amp.gain.setValueAtTime(0, start);
+      amp.gain.linearRampToValueAtTime(gain, start + attack);
+      if (sustainEnd > start + attack) {
+        amp.gain.linearRampToValueAtTime(gain * 0.7, sustainEnd);
+      }
+      amp.gain.linearRampToValueAtTime(0, end);
+
+      osc.connect(amp).connect(audioCtx.destination);
+      osc.start(start);
+      osc.stop(end + 0.05);
+    };
+
+    const playNoise = ({ duration = 0.6, filterFrequency = 1200, gain = 0.5, filterType = 'lowpass' }) => {
+      const bufferSize = Math.floor(audioCtx.sampleRate * duration);
+      const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+      const data = buffer.getChannelData(0);
+      for (let i = 0; i < bufferSize; i++) {
+        data[i] = Math.random() * 2 - 1;
+      }
+      const noise = audioCtx.createBufferSource();
+      noise.buffer = buffer;
+      const filter = audioCtx.createBiquadFilter();
+      filter.type = filterType;
+      filter.frequency.value = filterFrequency;
+      const amp = audioCtx.createGain();
+      const now = audioCtx.currentTime;
+      amp.gain.setValueAtTime(0, now);
+      amp.gain.linearRampToValueAtTime(gain, now + 0.02);
+      amp.gain.linearRampToValueAtTime(0, now + duration);
+      noise.connect(filter).connect(amp).connect(audioCtx.destination);
+      noise.start(now);
+      noise.stop(now + duration + 0.05);
+    };
+
+    const playChord = (rootFrequency) => {
+      const ratios = [1, 5/4, 3/2];
+      ratios.forEach((ratio, index) => {
+        playTone({
+          frequency: rootFrequency * ratio,
+          duration: 1.2,
+          attack: 0.05,
+          release: 0.6,
+          type: index === 0 ? 'triangle' : 'sine',
+          gain: 0.35
+        });
+      });
+    };
+
+    const playSparkle = () => {
+      const base = audioCtx.currentTime;
+      const sequence = [1046, 1245, 1480, 1661];
+      sequence.forEach((freq, i) => {
+        const delay = i * 0.08;
+        const osc = audioCtx.createOscillator();
+        const amp = audioCtx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(freq, base + delay);
+        amp.gain.setValueAtTime(0, base + delay);
+        amp.gain.linearRampToValueAtTime(0.5, base + delay + 0.02);
+        amp.gain.linearRampToValueAtTime(0, base + delay + 0.18);
+        osc.connect(amp).connect(audioCtx.destination);
+        osc.start(base + delay);
+        osc.stop(base + delay + 0.2);
+      });
+    };
+
+    const soundMap = {
+      bell: () => {
+        playTone({ frequency: 880, duration: 0.8, attack: 0.01, release: 0.5, type: 'sine', gain: 0.45 });
+        playTone({ frequency: 1318, duration: 0.8, attack: 0.03, release: 0.5, type: 'triangle', gain: 0.3 });
+      },
+      pluck: () => {
+        playTone({ frequency: 523, duration: 0.5, attack: 0.005, release: 0.4, type: 'sawtooth', gain: 0.35 });
+        playTone({ frequency: 784, duration: 0.4, attack: 0.01, release: 0.3, type: 'triangle', gain: 0.2 });
+      },
+      laser: () => {
+        const osc = audioCtx.createOscillator();
+        const amp = audioCtx.createGain();
+        const now = audioCtx.currentTime;
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(1500, now);
+        osc.frequency.exponentialRampToValueAtTime(220, now + 0.5);
+        amp.gain.setValueAtTime(0, now);
+        amp.gain.linearRampToValueAtTime(0.6, now + 0.05);
+        amp.gain.exponentialRampToValueAtTime(0.001, now + 0.5);
+        osc.connect(amp).connect(audioCtx.destination);
+        osc.start(now);
+        osc.stop(now + 0.6);
+      },
+      drum: () => {
+        playNoise({ duration: 0.4, filterFrequency: 800, gain: 0.6 });
+        const osc = audioCtx.createOscillator();
+        const amp = audioCtx.createGain();
+        const now = audioCtx.currentTime;
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(120, now);
+        osc.frequency.exponentialRampToValueAtTime(55, now + 0.4);
+        amp.gain.setValueAtTime(0.6, now);
+        amp.gain.exponentialRampToValueAtTime(0.001, now + 0.4);
+        osc.connect(amp).connect(audioCtx.destination);
+        osc.start(now);
+        osc.stop(now + 0.5);
+      },
+      sparkle: () => {
+        playSparkle();
+        playNoise({ duration: 0.25, filterFrequency: 6000, gain: 0.2, filterType: 'highpass' });
+      },
+      robot: () => {
+        const osc = audioCtx.createOscillator();
+        const amp = audioCtx.createGain();
+        const now = audioCtx.currentTime;
+        osc.type = 'square';
+        osc.frequency.setValueAtTime(220, now);
+        osc.frequency.linearRampToValueAtTime(260, now + 0.2);
+        osc.frequency.linearRampToValueAtTime(200, now + 0.4);
+        amp.gain.setValueAtTime(0, now);
+        amp.gain.linearRampToValueAtTime(0.5, now + 0.03);
+        amp.gain.linearRampToValueAtTime(0, now + 0.45);
+        osc.connect(amp).connect(audioCtx.destination);
+        osc.start(now);
+        osc.stop(now + 0.5);
+      },
+      chord: () => {
+        playChord(392); // G major chord
+      },
+      whoosh: () => {
+        playNoise({ duration: 0.7, filterFrequency: 900, gain: 0.4 });
+        const filter = audioCtx.createBiquadFilter();
+        filter.type = 'bandpass';
+        filter.frequency.setValueAtTime(400, audioCtx.currentTime);
+        const noiseSource = audioCtx.createBufferSource();
+        const duration = 0.8;
+        const bufferSize = Math.floor(audioCtx.sampleRate * duration);
+        const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+        const data = buffer.getChannelData(0);
+        for (let i = 0; i < bufferSize; i++) {
+          data[i] = (Math.random() * 2 - 1) * 0.6;
+        }
+        noiseSource.buffer = buffer;
+        const amp = audioCtx.createGain();
+        const now = audioCtx.currentTime;
+        amp.gain.setValueAtTime(0, now);
+        amp.gain.linearRampToValueAtTime(0.5, now + 0.1);
+        amp.gain.linearRampToValueAtTime(0, now + duration);
+        noiseSource.connect(filter).connect(amp).connect(audioCtx.destination);
+        filter.frequency.linearRampToValueAtTime(2000, now + duration);
+        noiseSource.start(now);
+        noiseSource.stop(now + duration + 0.05);
+      },
+      clock: () => {
+        [0, 0.25].forEach((offset) => {
+          playTone({ frequency: 880, duration: 0.18, attack: 0.005, release: 0.12, type: 'triangle', gain: 0.4, startOffset: offset });
+          playTone({ frequency: 660, duration: 0.16, attack: 0.005, release: 0.12, type: 'sine', gain: 0.3, startOffset: offset });
+        });
+      }
+    };
+
+    const buttons = document.querySelectorAll('[data-sound]');
+    buttons.forEach((button) => {
+      button.addEventListener('click', async () => {
+        if (audioCtx.state === 'suspended') {
+          await audioCtx.resume();
+        }
+        const sound = button.dataset.sound;
+        const handler = soundMap[sound];
+        if (handler) {
+          handler();
+        }
+      });
+    });
+  </script>
+</body>
+</html>
