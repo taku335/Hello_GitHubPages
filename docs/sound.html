@@ -37,6 +37,112 @@
       width:100%;
       max-width:520px;
     }
+    .section {
+      margin-top:50px;
+      width:100%;
+      max-width:960px;
+    }
+    .section h2 {
+      font-size:1.8rem;
+      margin-bottom:15px;
+    }
+    .section p {
+      margin-bottom:25px;
+      max-width:none;
+    }
+    .keyboard-chords {
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+      gap:18px;
+      align-items:start;
+    }
+    .key-stack {
+      background:rgba(255,255,255,0.7);
+      border-radius:20px;
+      padding:18px 16px 16px;
+      box-shadow:0 10px 25px rgba(0,0,0,0.12);
+    }
+    .root-label {
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:1.4rem;
+      font-weight:700;
+      margin-bottom:14px;
+      height:52px;
+      border-radius:16px;
+      color:#37474f;
+      background:linear-gradient(135deg,#ffffff,rgba(255,255,255,0.65));
+      box-shadow:inset 0 2px 6px rgba(0,0,0,0.08);
+    }
+    .root-label.black {
+      color:#fff;
+      background:linear-gradient(135deg,#263238,#455a64);
+    }
+    .chord-button {
+      display:block;
+      width:100%;
+      border:none;
+      border-radius:16px;
+      padding:12px 10px;
+      margin-bottom:10px;
+      font-size:0.95rem;
+      font-weight:600;
+      letter-spacing:0.02em;
+      cursor:pointer;
+      background:linear-gradient(135deg,#a5d8ff,#b4f8c8);
+      color:#2f4858;
+      box-shadow:0 6px 16px rgba(79,99,115,0.18);
+      transition:transform 0.1s ease, box-shadow 0.1s ease;
+    }
+    .chord-button:last-child {
+      margin-bottom:0;
+    }
+    .chord-button:active {
+      transform:translateY(2px);
+      box-shadow:0 4px 12px rgba(79,99,115,0.25);
+    }
+    .chord-button.alt {
+      background:linear-gradient(135deg,#ffcfdf,#fefdca);
+      color:#6a3f66;
+    }
+    .diatonic-section {
+      margin-top:60px;
+      background:rgba(255,255,255,0.72);
+      border-radius:24px;
+      padding:30px 24px;
+      box-shadow:0 12px 32px rgba(0,0,0,0.12);
+    }
+    .diatonic-groups {
+      display:grid;
+      gap:30px;
+    }
+    .diatonic-group h3 {
+      margin:0 0 16px;
+      font-size:1.4rem;
+    }
+    .diatonic-row {
+      display:flex;
+      flex-wrap:wrap;
+      gap:12px;
+    }
+    .diatonic-row .chord-button {
+      flex:1 1 150px;
+      margin-bottom:0;
+    }
+    @media (max-width:720px) {
+      .keyboard-chords {
+        grid-template-columns:repeat(auto-fit,minmax(130px,1fr));
+      }
+      .root-label {
+        font-size:1.2rem;
+        height:46px;
+      }
+      .chord-button {
+        font-size:0.9rem;
+        padding:11px 8px;
+      }
+    }
     button.sound-pad {
       border:none;
       padding:18px 10px;
@@ -92,6 +198,152 @@
       <button class="sound-pad" style="--start:#a1c4fd;--end:#c2e9fb;" data-sound="whoosh">そよかぜウーシュ</button>
       <button class="sound-pad" style="--start:#d4fc79;--end:#96e6a1;" data-sound="clock">ことことタイマー</button>
     </div>
+    <section class="section" aria-labelledby="keyboard-section">
+      <h2 id="keyboard-section">コードキーボード</h2>
+      <p>ピアノの鍵盤のように並んだルート音から、お好みのコードクオリティを選んで鳴らしてみましょう。メジャーセブンス、セブンス、マイナーセブンス、マイナーセブンスフラット5、トライアドの響きを楽しめます。</p>
+      <div class="keyboard-chords">
+        <div class="key-stack">
+          <div class="root-label">A</div>
+          <button class="chord-button" data-chord-root="A" data-quality="maj7">Amaj7</button>
+          <button class="chord-button alt" data-chord-root="A" data-quality="7">A7</button>
+          <button class="chord-button" data-chord-root="A" data-quality="m7">Am7</button>
+          <button class="chord-button alt" data-chord-root="A" data-quality="m7b5">Am7♭5</button>
+          <button class="chord-button" data-chord-root="A" data-quality="triad">Aトライアド</button>
+        </div>
+        <div class="key-stack">
+          <div class="root-label black">A♯</div>
+          <button class="chord-button" data-chord-root="A#" data-quality="maj7">A♯maj7</button>
+          <button class="chord-button alt" data-chord-root="A#" data-quality="7">A♯7</button>
+          <button class="chord-button" data-chord-root="A#" data-quality="m7">A♯m7</button>
+          <button class="chord-button alt" data-chord-root="A#" data-quality="m7b5">A♯m7♭5</button>
+          <button class="chord-button" data-chord-root="A#" data-quality="triad">A♯トライアド</button>
+        </div>
+        <div class="key-stack">
+          <div class="root-label">B</div>
+          <button class="chord-button" data-chord-root="B" data-quality="maj7">Bmaj7</button>
+          <button class="chord-button alt" data-chord-root="B" data-quality="7">B7</button>
+          <button class="chord-button" data-chord-root="B" data-quality="m7">Bm7</button>
+          <button class="chord-button alt" data-chord-root="B" data-quality="m7b5">Bm7♭5</button>
+          <button class="chord-button" data-chord-root="B" data-quality="triad">Bトライアド</button>
+        </div>
+        <div class="key-stack">
+          <div class="root-label">C</div>
+          <button class="chord-button" data-chord-root="C" data-quality="maj7">Cmaj7</button>
+          <button class="chord-button alt" data-chord-root="C" data-quality="7">C7</button>
+          <button class="chord-button" data-chord-root="C" data-quality="m7">Cm7</button>
+          <button class="chord-button alt" data-chord-root="C" data-quality="m7b5">Cm7♭5</button>
+          <button class="chord-button" data-chord-root="C" data-quality="triad">Cトライアド</button>
+        </div>
+        <div class="key-stack">
+          <div class="root-label black">C♯</div>
+          <button class="chord-button" data-chord-root="C#" data-quality="maj7">C♯maj7</button>
+          <button class="chord-button alt" data-chord-root="C#" data-quality="7">C♯7</button>
+          <button class="chord-button" data-chord-root="C#" data-quality="m7">C♯m7</button>
+          <button class="chord-button alt" data-chord-root="C#" data-quality="m7b5">C♯m7♭5</button>
+          <button class="chord-button" data-chord-root="C#" data-quality="triad">C♯トライアド</button>
+        </div>
+        <div class="key-stack">
+          <div class="root-label">D</div>
+          <button class="chord-button" data-chord-root="D" data-quality="maj7">Dmaj7</button>
+          <button class="chord-button alt" data-chord-root="D" data-quality="7">D7</button>
+          <button class="chord-button" data-chord-root="D" data-quality="m7">Dm7</button>
+          <button class="chord-button alt" data-chord-root="D" data-quality="m7b5">Dm7♭5</button>
+          <button class="chord-button" data-chord-root="D" data-quality="triad">Dトライアド</button>
+        </div>
+        <div class="key-stack">
+          <div class="root-label black">D♯</div>
+          <button class="chord-button" data-chord-root="D#" data-quality="maj7">D♯maj7</button>
+          <button class="chord-button alt" data-chord-root="D#" data-quality="7">D♯7</button>
+          <button class="chord-button" data-chord-root="D#" data-quality="m7">D♯m7</button>
+          <button class="chord-button alt" data-chord-root="D#" data-quality="m7b5">D♯m7♭5</button>
+          <button class="chord-button" data-chord-root="D#" data-quality="triad">D♯トライアド</button>
+        </div>
+        <div class="key-stack">
+          <div class="root-label">E</div>
+          <button class="chord-button" data-chord-root="E" data-quality="maj7">Emaj7</button>
+          <button class="chord-button alt" data-chord-root="E" data-quality="7">E7</button>
+          <button class="chord-button" data-chord-root="E" data-quality="m7">Em7</button>
+          <button class="chord-button alt" data-chord-root="E" data-quality="m7b5">Em7♭5</button>
+          <button class="chord-button" data-chord-root="E" data-quality="triad">Eトライアド</button>
+        </div>
+        <div class="key-stack">
+          <div class="root-label">F</div>
+          <button class="chord-button" data-chord-root="F" data-quality="maj7">Fmaj7</button>
+          <button class="chord-button alt" data-chord-root="F" data-quality="7">F7</button>
+          <button class="chord-button" data-chord-root="F" data-quality="m7">Fm7</button>
+          <button class="chord-button alt" data-chord-root="F" data-quality="m7b5">Fm7♭5</button>
+          <button class="chord-button" data-chord-root="F" data-quality="triad">Fトライアド</button>
+        </div>
+        <div class="key-stack">
+          <div class="root-label black">F♯</div>
+          <button class="chord-button" data-chord-root="F#" data-quality="maj7">F♯maj7</button>
+          <button class="chord-button alt" data-chord-root="F#" data-quality="7">F♯7</button>
+          <button class="chord-button" data-chord-root="F#" data-quality="m7">F♯m7</button>
+          <button class="chord-button alt" data-chord-root="F#" data-quality="m7b5">F♯m7♭5</button>
+          <button class="chord-button" data-chord-root="F#" data-quality="triad">F♯トライアド</button>
+        </div>
+        <div class="key-stack">
+          <div class="root-label">G</div>
+          <button class="chord-button" data-chord-root="G" data-quality="maj7">Gmaj7</button>
+          <button class="chord-button alt" data-chord-root="G" data-quality="7">G7</button>
+          <button class="chord-button" data-chord-root="G" data-quality="m7">Gm7</button>
+          <button class="chord-button alt" data-chord-root="G" data-quality="m7b5">Gm7♭5</button>
+          <button class="chord-button" data-chord-root="G" data-quality="triad">Gトライアド</button>
+        </div>
+        <div class="key-stack">
+          <div class="root-label black">G♯</div>
+          <button class="chord-button" data-chord-root="G#" data-quality="maj7">G♯maj7</button>
+          <button class="chord-button alt" data-chord-root="G#" data-quality="7">G♯7</button>
+          <button class="chord-button" data-chord-root="G#" data-quality="m7">G♯m7</button>
+          <button class="chord-button alt" data-chord-root="G#" data-quality="m7b5">G♯m7♭5</button>
+          <button class="chord-button" data-chord-root="G#" data-quality="triad">G♯トライアド</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="section diatonic-section" aria-labelledby="diatonic-section">
+      <h2 id="diatonic-section">ダイアトニックコード（F / C / B♭）</h2>
+      <p>各キーごとにメジャー系からマイナー系へと並べたダイアトニックコードです。響きの移り変わりを順番に聴いてみましょう。</p>
+      <div class="diatonic-groups">
+        <div class="diatonic-group">
+          <h3>Key of F</h3>
+          <div class="diatonic-row">
+            <button class="chord-button" data-chord-root="F" data-quality="maj7">Fmaj7</button>
+            <button class="chord-button" data-chord-root="Bb" data-quality="maj7">B♭maj7</button>
+            <button class="chord-button alt" data-chord-root="C" data-quality="7">C7</button>
+            <button class="chord-button" data-chord-root="G" data-quality="m7">Gm7</button>
+            <button class="chord-button" data-chord-root="A" data-quality="m7">Am7</button>
+            <button class="chord-button" data-chord-root="D" data-quality="m7">Dm7</button>
+            <button class="chord-button alt" data-chord-root="E" data-quality="m7b5">Em7♭5</button>
+          </div>
+        </div>
+        <div class="diatonic-group">
+          <h3>Key of C</h3>
+          <div class="diatonic-row">
+            <button class="chord-button" data-chord-root="C" data-quality="maj7">Cmaj7</button>
+            <button class="chord-button" data-chord-root="F" data-quality="maj7">Fmaj7</button>
+            <button class="chord-button alt" data-chord-root="G" data-quality="7">G7</button>
+            <button class="chord-button" data-chord-root="D" data-quality="m7">Dm7</button>
+            <button class="chord-button" data-chord-root="E" data-quality="m7">Em7</button>
+            <button class="chord-button" data-chord-root="A" data-quality="m7">Am7</button>
+            <button class="chord-button alt" data-chord-root="B" data-quality="m7b5">Bm7♭5</button>
+          </div>
+        </div>
+        <div class="diatonic-group">
+          <h3>Key of B♭</h3>
+          <div class="diatonic-row">
+            <button class="chord-button" data-chord-root="Bb" data-quality="maj7">B♭maj7</button>
+            <button class="chord-button" data-chord-root="Eb" data-quality="maj7">E♭maj7</button>
+            <button class="chord-button alt" data-chord-root="F" data-quality="7">F7</button>
+            <button class="chord-button" data-chord-root="C" data-quality="m7">Cm7</button>
+            <button class="chord-button" data-chord-root="D" data-quality="m7">Dm7</button>
+            <button class="chord-button" data-chord-root="G" data-quality="m7">Gm7</button>
+            <button class="chord-button alt" data-chord-root="A" data-quality="m7b5">Am7♭5</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <a class="back-link" href="index.html">← トップページへ戻る</a>
   </main>
   <footer>© 2024 フィンちゃんのパン屋さん</footer>
@@ -186,6 +438,76 @@
         osc.stop(base + delay + 0.2);
       });
     };
+
+    const QUALITY_INTERVALS = {
+      maj7: [0, 4, 7, 11],
+      '7': [0, 4, 7, 10],
+      m7: [0, 3, 7, 10],
+      m7b5: [0, 3, 6, 10],
+      triad: [0, 4, 7]
+    };
+
+    const NOTE_TO_MIDI = {
+      A: 57,
+      'A#': 58,
+      Bb: 58,
+      B: 59,
+      C: 60,
+      'C#': 61,
+      Db: 61,
+      D: 62,
+      'D#': 63,
+      Eb: 63,
+      E: 64,
+      F: 65,
+      'F#': 66,
+      Gb: 66,
+      G: 67,
+      'G#': 68,
+      Ab: 68
+    };
+
+    const noteToFrequency = (note) => {
+      const midi = NOTE_TO_MIDI[note];
+      if (midi === undefined) {
+        console.warn(`Unknown note: ${note}`);
+        return 0;
+      }
+      return 440 * Math.pow(2, (midi - 69) / 12);
+    };
+
+    const playIntervals = (root, intervals) => {
+      const rootFrequency = noteToFrequency(root);
+      if (!rootFrequency) return;
+
+      intervals.forEach((semitones, index) => {
+        const frequency = rootFrequency * Math.pow(2, semitones / 12);
+        playTone({
+          frequency,
+          duration: 1.4,
+          attack: 0.04,
+          release: 0.7,
+          type: index === 0 ? 'triangle' : 'sine',
+          gain: index === 0 ? 0.32 : 0.22,
+          startOffset: index * 0.01
+        });
+      });
+    };
+
+    const chordButtons = document.querySelectorAll('[data-chord-root]');
+    chordButtons.forEach((button) => {
+      button.addEventListener('click', async () => {
+        if (audioCtx.state === 'suspended') {
+          await audioCtx.resume();
+        }
+        const root = button.dataset.chordRoot;
+        const quality = button.dataset.quality;
+        const intervals = QUALITY_INTERVALS[quality];
+        if (intervals) {
+          playIntervals(root, intervals);
+        }
+      });
+    });
 
     const soundMap = {
       bell: () => {
