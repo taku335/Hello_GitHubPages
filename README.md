@@ -1,5 +1,7 @@
 # Hello GitHub Pages
 
+https://taku335.github.io/Hello_GitHubPages/
+
 This repository contains a simple site that displays "こんにちは".
 
 ## Deploying to GitHub Pages
