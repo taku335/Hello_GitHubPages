@@ -1,9 +1,22 @@
 {
   "name": "hello-github-pages",
-  "version": "1.0.0",
-  "description": "Validation form and tests",
+  "version": "2.0.0",
+  "private": true,
   "type": "module",
+  "description": "React refactor of the bakery site for GitHub Pages",
   "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
     "test": "node --test"
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.30.1"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.4.1",
+    "vite": "^5.4.12"
   }
 }
