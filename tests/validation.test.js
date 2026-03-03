@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { validateName, validateNum, validateDate, validateForm } from '../docs/scripts/validation.js';
+import { validateName, validateNum, validateDate, validateForm } from '../src/utils/validation.js';
 
 test('validateName accepts Japanese characters', () => {
   const result = validateName('山田太郎');
